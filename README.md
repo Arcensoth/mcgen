@@ -2,10 +2,20 @@
 
 Python utilities for downloading and processing Minecraft's generated data.
 
+[![PyPI](https://img.shields.io/pypi/v/mcgen.svg)](https://pypi.org/project/mcgen/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mcgen.svg)](https://pypi.org/project/mcgen/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/arcensoth/mcgen)
+
 ## Requirements
 
 - Python 3.8+
 - Java 11+ (for invoking the Minecraft server's data generator)
+
+## Installation
+
+```bash
+pip install mcgen
+```
 
 ## Usage
 
