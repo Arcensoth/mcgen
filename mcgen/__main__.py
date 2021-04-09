@@ -5,8 +5,11 @@ from pathlib import Path
 from mcgen.logging import setup_logging
 from mcgen.run import run
 
+DEFAULT_JARSDIR = "temp/mcgen/jars"
+DEFAULT_RAWDIR = "temp/mcgen/raw"
+DEFAULT_OUTDIR = "temp/mcgen/out"
+DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
-
 DEFAULT_PROCESSORS = (
     "mcgen.processors.convert_json_files",
     "mcgen.processors.split_registries",
@@ -22,22 +25,22 @@ ARG_PARSER = argparse.ArgumentParser(
 )
 ARG_PARSER.add_argument(
     "--jarsdir",
-    default="mcgen/jars",
-    help="Where to download and store server jars. Default: mcgen/jars",
+    default=DEFAULT_JARSDIR,
+    help=f"Where to download and store server jars. Default: {DEFAULT_JARSDIR}",
 )
 ARG_PARSER.add_argument(
     "--rawdir",
-    default="mcgen/raw",
-    help="Where to store the raw server-generated files. Default: mcgen/raw",
+    default=DEFAULT_RAWDIR,
+    help=f"Where to store the raw server-generated files. Default: {DEFAULT_RAWDIR}",
 )
 ARG_PARSER.add_argument(
     "--outdir",
-    default="mcgen/out",
-    help="Where to write the final processed output. Default: mcgen/out",
+    default=DEFAULT_OUTDIR,
+    help=f"Where to write the final processed output. Default: {DEFAULT_OUTDIR}",
 )
 ARG_PARSER.add_argument(
     "--version",
-    default="snapshot",
+    default=DEFAULT_VERSION,
     help="The server version to download and process. Defaults to latest snapshot.",
 )
 ARG_PARSER.add_argument(
@@ -50,7 +53,7 @@ ARG_PARSER.add_argument(
     default=DEFAULT_PROCESSORS,
     nargs="*",
     help="Which processors to use in processing the raw server-generated files."
-    + " Defaults to a pre-defined set of basic processors.",
+    + " Defaults to a set of built-in processors.",
 )
 ARG_PARSER.add_argument(
     "--log",
