@@ -8,7 +8,7 @@ LOG = logging.getLogger(__name__)
 
 
 def process(ctx: Context, **options):
-    """ Convert json files into another form. """
+    """Convert json files into another form."""
 
     LOG.info("Converting json files...")
 

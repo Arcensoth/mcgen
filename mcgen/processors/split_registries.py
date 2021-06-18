@@ -7,7 +7,7 @@ LOG = logging.getLogger(__name__)
 
 
 def process(ctx: Context, **options):
-    """ Split `registries.json` into separate files. """
+    """Split `registries.json` into separate files."""
 
     registries_location = "reports/registries.json"
     LOG.info(f"Splitting registries at: {registries_location}")

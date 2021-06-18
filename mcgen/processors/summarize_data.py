@@ -7,7 +7,7 @@ LOG = logging.getLogger(__name__)
 
 
 def process(ctx: Context, **options):
-    """ Create a summary of each vanilla registry. """
+    """Create a summary of each vanilla registry."""
 
     data_location = "data/minecraft"
     LOG.info(f"Summarizing data at: {data_location}")
