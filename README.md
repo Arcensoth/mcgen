@@ -24,19 +24,19 @@ python -m mcgen --help
 ```
 
 ```
-mcgen [-h] [--jarsdir JARSDIR] [--rawdir RAWDIR] [--outdir OUTDIR] [--version VERSION] [--manifest MANIFEST] [--processors [PROCESSORS [PROCESSORS ...]]] [--log LOG]
+mcgen [-h] [--jarpath JARPATH] [--rawpath RAWPATH] [--outpath OUTPATH] [--version VERSION] [--manifest MANIFEST] [--processors [PROCESSORS [PROCESSORS ...]]] [--log LOG]
 
 Download the Minecraft server jar for the specified version, invoke the data generator, and process the output.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --jarsdir JARSDIR     Where to download and store server jars. Default: mcgen/jars
-  --rawdir RAWDIR       Where to store the raw server-generated files. Default: mcgen/raw
-  --outdir OUTDIR       Where to write the final processed output. Default: mcgen/out
+  --jarpath JARPATH     Where to download and store the server jar. Default: temp/jars/minecraft_server.{version}.jar
+  --rawpath RAWPATH     Where to store the raw server-generated files. Default: temp/raw/{version}
+  --outpath OUTPATH     Where to write the final processed output. Default: temp/out/{version}
   --version VERSION     The server version to download and process. Defaults to latest snapshot.
   --manifest MANIFEST   Where to fetch the version manifest from. Defaults to Mojang's online copy.
   --processors [PROCESSORS [PROCESSORS ...]]
-                        Which processors to use in processing the raw server-generated files. Defaults to a pre-defined set of basic processors.
+                        Which processors to use in processing the raw server-generated files. Defaults to a set of built-in processors.
   --log LOG             The level of verbosity at which to print log messages.
 ```
 

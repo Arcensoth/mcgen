@@ -12,22 +12,13 @@ LOG = logging.getLogger(__name__)
 
 
 def run(
-    jarsdir: Path,
-    rawdir: Path,
-    outdir: Path,
+    jarpath: str,
+    rawpath: str,
+    outpath: str,
     version: str,
     manifest_location: str,
     processors: List[Any],
 ):
-    LOG.info(f"Using jarsdir: {jarsdir}")
-    jarsdir.mkdir(parents=True, exist_ok=True)
-
-    LOG.info(f"Using rawdir: {rawdir}")
-    rawdir.mkdir(parents=True, exist_ok=True)
-
-    LOG.info(f"Using outdir: {outdir}")
-    outdir.mkdir(parents=True, exist_ok=True)
-
     LOG.info(f"Using version: {version}")
     LOG.info(f"Using manifest location: {manifest_location}")
 
@@ -56,9 +47,18 @@ def run(
     assert version_entry is not None
 
     # download the server jar if we don't already have it
-    server_jar_path = jarsdir / f"minecraft_server.{resolved_version}.jar"
-    if not server_jar_path.exists():
+
+    jar_path = Path(jarpath.format(version=resolved_version)).absolute()
+    LOG.info(f"Using path for server jar: {jar_path}")
+
+    if jar_path.exists():
+        LOG.info(f"Found local server jar at: {jar_path}")
+
+    else:
         LOG.info("Unable to find local server jar; requires download")
+
+        # create parent directories
+        jar_path.parent.mkdir(parents=True, exist_ok=True)
 
         # download the version data
         version_url = version_entry["url"]
@@ -70,48 +70,39 @@ def run(
         server_jar_url = version_data["downloads"]["server"]["url"]
         LOG.info(f"Downloading server jar from: {server_jar_url}")
         server_jar_raw = urllib.request.urlopen(server_jar_url).read()
-        LOG.info(f"Saving server jar to: {server_jar_path}")
-        with open(server_jar_path, "wb") as jar_fp:
+        LOG.info(f"Saving server jar to: {jar_path}")
+        with open(jar_path, "wb") as jar_fp:
             jar_fp.write(server_jar_raw)
 
-    else:
-        LOG.info(f"Found local server jar at: {server_jar_path}")
+    # resolve the path to the raw data
+    raw_path = Path(rawpath.format(version=resolved_version)).absolute()
+    LOG.info(f"Using directory for raw data: {raw_path}")
+    if raw_path.exists():
+        raise Exception(f"Directory for raw data already exists at: {raw_path}")
+    raw_path.mkdir(parents=True, exist_ok=True)
 
-    # keep the server-generated data for this version in its own folder
-    version_rawdir = rawdir / resolved_version
-    LOG.info(f"Storing version's raw data under: {version_rawdir}")
-    if not version_rawdir.exists():
-        version_rawdir.mkdir()
-        # invoke the server's data generator via subprocess
-        java_cmd = (
-            f"java -cp {server_jar_path} net.minecraft.data.Main --server --reports"
-        )
-        LOG.info(f"Invoking server's data generator with: {java_cmd}")
-        LOG.info("-" * 80)
-        java_proc = subprocess.Popen(java_cmd.split(), cwd=version_rawdir)
-        java_result = java_proc.wait()
-        LOG.info("-" * 80)
-        LOG.info(f"Server's data generator completed with result: {java_result}")
-    else:
-        LOG.warning(
-            f"Generated data for version {resolved_version} already exists at: {version_rawdir}"
-        )
+    # collect the raw server-generated data
+    LOG.info(f"Storing raw data under: {raw_path}")
+    java_cmd = f"java -cp {jar_path} net.minecraft.data.Main --server --reports"
+    LOG.info(f"Invoking server's data generator with: {java_cmd}")
+    LOG.info("-" * 80)
+    java_proc = subprocess.Popen(java_cmd.split(), cwd=raw_path)
+    java_result = java_proc.wait()
+    LOG.info("-" * 80)
+    LOG.info(f"Server's data generator completed with result: {java_result}")
 
-    # also keep the processed data for this version in its own folder
-    version_outdir = outdir / resolved_version
-    LOG.info(f"Storing version's processed data under: {version_outdir}")
-    if not version_outdir.exists():
-        version_outdir.mkdir()
-    else:
-        LOG.warning(
-            f"Processed data for version {resolved_version} already exists at: {version_outdir}"
-        )
+    # create a folder for the processed output
+    out_path = Path(outpath.format(version=resolved_version)).absolute()
+    LOG.info(f"Using directory for output: {out_path}")
+    if out_path.exists():
+        raise Exception(f"Directory for output already exists at: {out_path}")
+    out_path.mkdir(parents=True, exist_ok=True)
 
     # create context and run processors
     LOG.info("Processing data...")
     ctx = Context(
-        input_dir=version_rawdir / "generated",
-        output_dir=version_outdir,
+        input_dir=raw_path / "generated",
+        output_dir=out_path,
         version=resolved_version,
     )
     for processor in processors:

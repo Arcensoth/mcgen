@@ -1,13 +1,12 @@
 import argparse
 import logging
-from pathlib import Path
 
 from mcgen.logging import setup_logging
 from mcgen.run import run
 
-DEFAULT_JARSDIR = "temp/mcgen/jars"
-DEFAULT_RAWDIR = "temp/mcgen/raw"
-DEFAULT_OUTDIR = "temp/mcgen/out"
+DEFAULT_JARPATH = "temp/jars/minecraft_server.{version}.jar"
+DEFAULT_RAWPATH = "temp/raw/{version}"
+DEFAULT_OUTPATH = "temp/out/{version}"
 DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
 DEFAULT_PROCESSORS = (
@@ -24,19 +23,19 @@ ARG_PARSER = argparse.ArgumentParser(
     + " invoke the data generator, and process the output.",
 )
 ARG_PARSER.add_argument(
-    "--jarsdir",
-    default=DEFAULT_JARSDIR,
-    help=f"Where to download and store server jars. Default: {DEFAULT_JARSDIR}",
+    "--jarpath",
+    default=DEFAULT_JARPATH,
+    help=f"Where to download and store the server jar. Default: {DEFAULT_JARPATH}",
 )
 ARG_PARSER.add_argument(
-    "--rawdir",
-    default=DEFAULT_RAWDIR,
-    help=f"Where to store the raw server-generated files. Default: {DEFAULT_RAWDIR}",
+    "--rawpath",
+    default=DEFAULT_RAWPATH,
+    help=f"Where to store the raw server-generated files. Default: {DEFAULT_RAWPATH}",
 )
 ARG_PARSER.add_argument(
-    "--outdir",
-    default=DEFAULT_OUTDIR,
-    help=f"Where to write the final processed output. Default: {DEFAULT_OUTDIR}",
+    "--outpath",
+    default=DEFAULT_OUTPATH,
+    help=f"Where to write the final processed output. Default: {DEFAULT_OUTPATH}",
 )
 ARG_PARSER.add_argument(
     "--version",
@@ -66,9 +65,9 @@ setup_logging(ARGS.log)
 
 
 run(
-    jarsdir=Path(ARGS.jarsdir).absolute(),
-    rawdir=Path(ARGS.rawdir).absolute(),
-    outdir=Path(ARGS.outdir).absolute(),
+    jarpath=str(ARGS.jarpath),
+    rawpath=str(ARGS.rawpath),
+    outpath=str(ARGS.outpath),
     version=str(ARGS.version),
     manifest_location=str(ARGS.manifest),
     processors=list(ARGS.processors),
