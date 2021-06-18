@@ -11,6 +11,7 @@ DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
 DEFAULT_PROCESSORS = (
     "mcgen.processors.convert_json_files",
+    "mcgen.processors.simplify_blocks",
     "mcgen.processors.split_registries",
     "mcgen.processors.summarize_data",
     "mcgen.processors.summarize_biomes",

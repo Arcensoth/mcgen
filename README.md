@@ -55,6 +55,7 @@ python -m mcgen --processors mcgen.processors.split_registries mcgen.processors.
 Several built-in processors are provided in [`mcgen.processors`](./mcgen/processors):
 
 - [`convert_json_files`](./mcgen/processors/convert_json_files.py) - Convert json files into another form.
+- [`simplify_blocks`](./mcgen/processors/simplify_blocks.py) - Create an optimized summary of blocks.
 - [`split_registries`](./mcgen/processors/split_registries.py) - Split `registries.json` into separate files.
 - [`summarize_biomes`](./mcgen/processors/summarize_biomes.py) - Create a summary of biome reports.
 - [`summarize_data`](./mcgen/processors/summarize_data.py) - Create a summary of each vanilla registry.
