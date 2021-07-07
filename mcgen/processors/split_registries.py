@@ -9,11 +9,9 @@ LOG = logging.getLogger(__name__)
 def process(ctx: Context, **options):
     """Split `registries.json` into separate files."""
 
-    registries_location = "reports/registries.json"
-    LOG.info(f"Splitting registries at: {registries_location}")
-
     # load registries.json
-    registries_inpath = ctx.input_dir / registries_location
+    registries_inpath = ctx.input_dir / "reports/registries.json"
+    LOG.info(f"Splitting registries at: {registries_inpath}")
     with open(registries_inpath) as fp:
         registries_data = json.load(fp)
 
@@ -24,8 +22,7 @@ def process(ctx: Context, **options):
         LOG.debug(f"Found {len(reg_entries)} entries for registry: {reg_name}")
         reg_shortname = reg_name.split(":")[1]
         reg_location = f"{registries_location}/{reg_shortname}"
-        entries = registry["entries"]
-        values = sorted(list(entries.keys()))
+        values = sorted(list(reg_entries.keys()))
         data = {"values": values}
         ctx.write_values(values, reg_location)
         ctx.write_data(data, reg_location)
