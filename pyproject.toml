@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mcgen"
-version = "0.4.0"
+version = "0.5.0"
 description = "Python utilities for downloading and processing Minecraft's generated data."
 authors = ["Arcensoth <arcensoth@gmail.com>"]
 license = "MIT"
