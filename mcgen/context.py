@@ -33,20 +33,20 @@ class Context:
         filepath = (file_absdir / "data").with_suffix(ext)
         return filepath
 
-    def write_json(self, data: dict, file_root: StrOrPath):
-        filepath = self.prepare_filepath(file_root, ".json")
+    def write_json(self, data: dict, file_root: StrOrPath, ext=".json"):
+        filepath = self.prepare_filepath(file_root, ext)
         LOG.debug(f"Writing JSON file: {filepath}")
         with open(filepath, "w") as fp:
             json.dump(data, fp, indent=2, sort_keys=True)
 
-    def write_min_json(self, data: dict, file_root: StrOrPath):
-        filepath = self.prepare_filepath(file_root, ".min.json")
+    def write_min_json(self, data: dict, file_root: StrOrPath, ext=".min.json"):
+        filepath = self.prepare_filepath(file_root, ext)
         LOG.debug(f"Writing minified JSON file: {filepath}")
         with open(filepath, "w") as fp:
             json.dump(data, fp, separators=(",", ":"), sort_keys=True)
 
-    def write_values_txt(self, values: list, file_root: StrOrPath):
-        filepath = self.prepare_filepath(file_root, ".values.txt")
+    def write_values_txt(self, values: list, file_root: StrOrPath, ext=".values.txt"):
+        filepath = self.prepare_filepath(file_root, ext)
         LOG.debug(f"Writing values TXT file: {filepath}")
         with open(filepath, "w") as fp:
             fp.write("\n".join(values))
