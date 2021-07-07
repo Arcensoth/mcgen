@@ -24,6 +24,6 @@ def process(ctx: Context, **options):
                 file_inpath = sub_indir / filename
                 with open(file_inpath) as fp:
                     file_data = json.load(fp)
-                file_reldir = (sub_reldir / filename).with_suffix("")
-                file_root = file_reldir.as_posix()
-                ctx.write_data(file_data, file_root)
+                node_path = (sub_reldir / filename).with_suffix("")
+                ctx.write_json_node(file_data, node_path)
+                ctx.write_min_json_node(file_data, node_path)

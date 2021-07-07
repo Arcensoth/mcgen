@@ -1,5 +1,6 @@
 import json
 import logging
+from pathlib import Path
 
 from mcgen.context import Context
 
@@ -16,13 +17,14 @@ def process(ctx: Context, **options):
         registries_data = json.load(fp)
 
     # split each registry into its own set of files
-    registries_location = "reports/registries"
+    registries_path = Path("reports/registries")
     for reg_name, registry in registries_data.items():
         reg_entries = registry["entries"]
         LOG.debug(f"Found {len(reg_entries)} entries for registry: {reg_name}")
         reg_shortname = reg_name.split(":")[1]
-        reg_location = f"{registries_location}/{reg_shortname}"
+        reg_node_path = registries_path / reg_shortname
         values = sorted(list(reg_entries.keys()))
         data = {"values": values}
-        ctx.write_values(values, reg_location)
-        ctx.write_data(data, reg_location)
+        ctx.write_values_txt_node(values, reg_node_path)
+        ctx.write_json_node(data, reg_node_path)
+        ctx.write_min_json_node(data, reg_node_path)

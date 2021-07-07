@@ -1,5 +1,6 @@
 import json
 import logging
+from pathlib import Path
 
 from mcgen.context import Context
 
@@ -27,6 +28,7 @@ def process(ctx: Context, **options):
             ).get("properties", {}),
         }
 
-    # write the simplified blocks file
-    simplified_blocks_root = "reports/blocks/simplified"
-    ctx.write_data(data, simplified_blocks_root)
+    # write the simplified blocks files
+    node_path = Path("reports/blocks/simplified")
+    ctx.write_json_node(data, node_path)
+    ctx.write_min_json_node(data, node_path)

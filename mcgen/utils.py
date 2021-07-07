@@ -9,11 +9,11 @@ LOG = logging.getLogger(__name__)
 
 def summarize_registry(
     ctx: Context,
-    registry_location: str,
+    registry_path: Path,
     namespace: str = "minecraft",
 ) -> List[str]:
-    LOG.debug(f"Summarizing registry at: {registry_location}")
-    registry_indir = ctx.input_dir / registry_location
+    LOG.debug(f"Summarizing registry at: {registry_path}")
+    registry_indir = ctx.input_dir / registry_path
     unsorted_ids = []
     for dirpath, dirnames, filenames in ctx.walk(registry_indir):
         dirpath_path = Path(dirpath)
@@ -24,6 +24,7 @@ def summarize_registry(
             unsorted_ids.append(resource_id)
     sorted_ids = sorted(unsorted_ids)
     summary = {"values": sorted_ids}
-    ctx.write_values(sorted_ids, registry_location)
-    ctx.write_data(summary, registry_location)
+    ctx.write_values_txt_node(sorted_ids, registry_path)
+    ctx.write_json_node(summary, registry_path)
+    ctx.write_min_json_node(summary, registry_path)
     return sorted_ids
