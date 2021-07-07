@@ -16,6 +16,7 @@ DEFAULT_PROCESSORS = (
     "mcgen.processors.split_registries",
     "mcgen.processors.summarize_data",
     "mcgen.processors.summarize_biomes",
+    "mcgen.processors.create_all_tags_data_pack",
 )
 
 ARG_PARSER = argparse.ArgumentParser(

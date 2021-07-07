@@ -18,6 +18,23 @@ class Context:
     version: str
     exclude_dirs: Tuple[str, ...] = (".cache", "tmp")
 
+    def validate_file_path(self, path: Path) -> Path:
+        # assert that the given path is relative
+        assert not path.is_absolute()
+        # convert the path to an absolute path
+        file_absdir = (self.output_dir / path).resolve()
+        # assert that it remains within the output directory
+        assert file_absdir.relative_to(self.output_dir)
+        # ensure that the containing directory exists
+        file_absdir.parent.mkdir(parents=True, exist_ok=True)
+        return file_absdir
+
+    def write_json_file(self, data: dict, relpath: Path):
+        abspath = self.validate_file_path(relpath)
+        LOG.debug(f"Writing JSON file: {abspath}")
+        with open(abspath, "w") as fp:
+            json.dump(data, fp, indent=2, sort_keys=True)
+
     def prepare_filepath(self, file_root: StrOrPath, ext: str) -> Path:
         # convert the given path into a pathlib path
         file_reldir = Path(file_root)
