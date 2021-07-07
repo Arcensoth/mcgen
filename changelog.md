@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Added a `create_all_tags_data_pack` processor that generated a data pack with "all tags"
+- Added a `create_all_tags_data_pack` processor that generates a data pack with "all" tags.
   - The data pack contains an `#mcdata:all` tag for each type of supported registry:
     - `minecraft:block` -> `tags/blocks`
     - `minecraft:entity_type` -> `tags/entity_types`
