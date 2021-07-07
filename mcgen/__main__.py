@@ -10,12 +10,12 @@ DEFAULT_OUTPATH = "temp/out/{version}"
 DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
 DEFAULT_PROCESSORS = (
+    "mcgen.processors.write_version_file",
     "mcgen.processors.convert_json_files",
     "mcgen.processors.simplify_blocks",
     "mcgen.processors.split_registries",
     "mcgen.processors.summarize_data",
     "mcgen.processors.summarize_biomes",
-    "mcgen.processors.write_version_file",
 )
 
 ARG_PARSER = argparse.ArgumentParser(
