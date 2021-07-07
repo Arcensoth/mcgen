@@ -54,12 +54,13 @@ python -m mcgen --processors mcgen.processors.split_registries mcgen.processors.
 
 Several built-in processors are provided in [`mcgen.processors`](./mcgen/processors):
 
+- [`write_version_file`](./mcgen/processors/write_version_file.py) - Write the game version to a file.
 - [`convert_json_files`](./mcgen/processors/convert_json_files.py) - Convert json files into another form.
 - [`simplify_blocks`](./mcgen/processors/simplify_blocks.py) - Create an optimized summary of blocks.
 - [`split_registries`](./mcgen/processors/split_registries.py) - Split `registries.json` into separate files.
 - [`summarize_biomes`](./mcgen/processors/summarize_biomes.py) - Create a summary of biome reports.
 - [`summarize_data`](./mcgen/processors/summarize_data.py) - Create a summary of each vanilla registry.
-- [`write_version_file`](./mcgen/processors/write_version_file.py) - Write the game version to a file.
+- [`create_all_tags_data_pack`](./mcgen/processors/create_all_tags_data_pack.py) - Generate a data pack with "all" tags.
 
 ## Custom processors
 
