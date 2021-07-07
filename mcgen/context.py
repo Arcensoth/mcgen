@@ -3,9 +3,12 @@ import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, List, Tuple
+from typing import Iterator, List, Tuple, Union
 
 LOG = logging.getLogger(__name__)
+
+
+StrOrPath = Union[str, Path]
 
 
 @dataclass
@@ -15,7 +18,7 @@ class Context:
     version: str
     exclude_dirs: Tuple[str, ...] = (".cache", "tmp")
 
-    def prepare_filepath(self, file_root: str, ext: str) -> Path:
+    def prepare_filepath(self, file_root: StrOrPath, ext: str) -> Path:
         # convert the given path into a pathlib path
         file_reldir = Path(file_root)
         # assert that the given path is relative
@@ -30,29 +33,29 @@ class Context:
         filepath = (file_absdir / "data").with_suffix(ext)
         return filepath
 
-    def write_json(self, data: dict, file_root: str):
+    def write_json(self, data: dict, file_root: StrOrPath):
         filepath = self.prepare_filepath(file_root, ".json")
         LOG.debug(f"Writing JSON file: {filepath}")
         with open(filepath, "w") as fp:
             json.dump(data, fp, indent=2, sort_keys=True)
 
-    def write_min_json(self, data: dict, file_root: str):
+    def write_min_json(self, data: dict, file_root: StrOrPath):
         filepath = self.prepare_filepath(file_root, ".min.json")
         LOG.debug(f"Writing minified JSON file: {filepath}")
         with open(filepath, "w") as fp:
             json.dump(data, fp, separators=(",", ":"), sort_keys=True)
 
-    def write_values_txt(self, values: list, file_root: str):
+    def write_values_txt(self, values: list, file_root: StrOrPath):
         filepath = self.prepare_filepath(file_root, ".values.txt")
         LOG.debug(f"Writing values TXT file: {filepath}")
         with open(filepath, "w") as fp:
             fp.write("\n".join(values))
 
-    def write_data(self, data: dict, file_root: str):
+    def write_data(self, data: dict, file_root: StrOrPath):
         self.write_json(data, file_root)
         self.write_min_json(data, file_root)
 
-    def write_values(self, values: list, file_root: str):
+    def write_values(self, values: list, file_root: StrOrPath):
         self.write_values_txt(values, file_root)
 
     def walk(self, path: Path) -> Iterator[Tuple[str, List[str], List[str]]]:
