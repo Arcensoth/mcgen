@@ -16,6 +16,7 @@ def run(
     rawpath: str,
     outpath: str,
     version: str,
+    java_cmd: str,
     manifest_location: str,
     processors: List[Any],
 ):
@@ -83,10 +84,10 @@ def run(
 
     # collect the raw server-generated data
     LOG.info(f"Storing raw data under: {raw_path}")
-    java_cmd = f"java -cp {jar_path} net.minecraft.data.Main --server --reports"
-    LOG.info(f"Invoking server's data generator with: {java_cmd}")
+    actual_java_cmd = java_cmd.format(jar_path=jar_path)
+    LOG.info(f"Invoking server's data generator with: {actual_java_cmd}")
     LOG.info("-" * 80)
-    java_proc = subprocess.Popen(java_cmd.split(), cwd=raw_path)
+    java_proc = subprocess.Popen(actual_java_cmd.split(), cwd=raw_path)
     java_result = java_proc.wait()
     LOG.info("-" * 80)
     LOG.info(f"Server's data generator completed with result: {java_result}")

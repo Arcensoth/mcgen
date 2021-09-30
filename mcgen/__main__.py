@@ -9,6 +9,7 @@ DEFAULT_RAWPATH = "temp/raw/{version}"
 DEFAULT_OUTPATH = "temp/out/{version}"
 DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+DEFAULT_JAVA_CMD = "java -cp {jar_path} net.minecraft.data.Main --server --reports"
 DEFAULT_PROCESSORS = (
     "mcgen.processors.write_version_file",
     "mcgen.processors.convert_json_files",
@@ -45,6 +46,12 @@ ARG_PARSER.add_argument(
     help="The server version to download and process. Defaults to latest snapshot.",
 )
 ARG_PARSER.add_argument(
+    "--cmd",
+    default=DEFAULT_JAVA_CMD,
+    help="The java command to invoke the data generator. This string will be formatted"
+    + f" with the `jar_path` argument available. Default: {DEFAULT_JAVA_CMD}.",
+)
+ARG_PARSER.add_argument(
     "--manifest",
     default=DEFAULT_MANIFEST,
     help="Where to fetch the version manifest from. Defaults to Mojang's online copy.",
@@ -71,6 +78,7 @@ run(
     rawpath=str(ARGS.rawpath),
     outpath=str(ARGS.outpath),
     version=str(ARGS.version),
+    java_cmd=str(ARGS.cmd),
     manifest_location=str(ARGS.manifest),
     processors=list(ARGS.processors),
 )

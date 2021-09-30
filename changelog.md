@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- New CLI option `--cmd` to pass a custom command to invoke the data generator with (to support changes from 21w39a onward)
+
 ## [0.5.0] - 2021-07-07
 
 ### Added
