@@ -9,7 +9,9 @@ DEFAULT_RAWPATH = "temp/raw/{version}"
 DEFAULT_OUTPATH = "temp/out/{version}"
 DEFAULT_VERSION = "snapshot"
 DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
-DEFAULT_JAVA_CMD = "java -cp {jar_path} net.minecraft.data.Main --server --reports"
+DEFAULT_JAVA_CMD = (
+    "java -DbundlerMainClass=net.minecraft.data.Main -jar {jar_path} --server --reports"
+)
 DEFAULT_PROCESSORS = (
     "mcgen.processors.write_version_file",
     "mcgen.processors.convert_json_files",

@@ -73,3 +73,17 @@ def process(ctx: Context, **options):
 
 - `ctx` contains information about the processing context
 - `options` is a key-value mapping of arbitrary data
+
+## 21w39a
+
+Note that in snapshot 21w39a the `java` command used to invoke the server generator changed:
+
+```bash
+# Prior to 21w39a:
+java -cp {jar_path} net.minecraft.data.Main --server --reports
+
+# From 21w39a onward:
+java -DbundlerMainClass=net.minecraft.data.Main -jar {jar_path} --server --reports
+```
+
+If you need to generate data for versions prior to 21w39a, use the `--cmd` option with the older `java` command.
