@@ -58,8 +58,8 @@ Several built-in processors are provided in [`mcgen.processors`](./mcgen/process
 - [`convert_json_files`](./mcgen/processors/convert_json_files.py) - Convert json files into another form.
 - [`simplify_blocks`](./mcgen/processors/simplify_blocks.py) - Create an optimized summary of blocks.
 - [`split_registries`](./mcgen/processors/split_registries.py) - Split `registries.json` into separate files.
-- [`summarize_biomes`](./mcgen/processors/summarize_biomes.py) - Create a summary of biome reports.
 - [`summarize_data`](./mcgen/processors/summarize_data.py) - Create a summary of each vanilla registry.
+- [`summarize_worldgen`](./mcgen/processors/summarize_worldgen.py) - Create a summary of worldgen reports.
 - [`create_all_tags_data_pack`](./mcgen/processors/create_all_tags_data_pack.py) - Generate a data pack with "all" tags.
 
 ## Custom processors

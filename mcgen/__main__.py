@@ -16,7 +16,7 @@ DEFAULT_PROCESSORS = (
     "mcgen.processors.simplify_blocks",
     "mcgen.processors.split_registries",
     "mcgen.processors.summarize_data",
-    "mcgen.processors.summarize_biomes",
+    "mcgen.processors.summarize_worldgen",
     "mcgen.processors.create_all_tags_data_pack",
 )
 
