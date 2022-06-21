@@ -8,7 +8,7 @@ DEFAULT_JARPATH = "temp/jars/minecraft_server.{version}.jar"
 DEFAULT_RAWPATH = "temp/raw/{version}"
 DEFAULT_OUTPATH = "temp/out/{version}"
 DEFAULT_VERSION = "snapshot"
-DEFAULT_MANIFEST = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+DEFAULT_MANIFEST = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 DEFAULT_JAVA_CMD = (
     "java -DbundlerMainClass=net.minecraft.data.Main -jar {jar_path} --server --reports"
 )
